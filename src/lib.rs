@@ -378,7 +378,7 @@ pub mod rbtree_implementation {
         pub fn delete(&mut self, z: Vertex) {
             let mut y = clone_node(&z);
             let mut y_original_colour = y.borrow().colour;
-            let mut x: OptionalVertex;
+            let x: OptionalVertex;
             if self.is_sentinel_nil(&z.borrow().left) {
                 x = clone_node_optional(&z.borrow().right);
                 self.transplant(clone_node(&z), clone_node_optional(&z.borrow().right));
@@ -638,11 +638,15 @@ pub mod rbtree_implementation {
                 return;
             }
             let node_rc: &Rc<RefCell<RedBlackTreeNode>> = node.as_ref().unwrap();
-            let n:Ref<'_, RedBlackTreeNode> = node_rc.borrow();
-            println!("{} - Key: {}, Colour: {:?}", " ".repeat(indent), n.key, n.colour);
+            let n: Ref<'_, RedBlackTreeNode> = node_rc.borrow();
+            println!(
+                "{} - Key: {}, Colour: {:?}",
+                " ".repeat(indent),
+                n.key,
+                n.colour
+            );
             self.pretty_print_tree_internal(&n.left, indent + 4);
             self.pretty_print_tree_internal(&n.right, indent + 4);
         }
-
     }
 }
