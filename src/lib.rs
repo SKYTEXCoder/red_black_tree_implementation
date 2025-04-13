@@ -162,7 +162,8 @@ pub mod rbtree_implementation {
             if self.is_sentinel_nil(&x.borrow().parent) {
                 self.root = Some(clone_node(&y_rc));
             } else {
-                let x_parent: Rc<RefCell<RedBlackTreeNode>> = x.borrow().parent.as_ref().unwrap().clone();
+                let x_parent: Rc<RefCell<RedBlackTreeNode>> =
+                    x.borrow().parent.as_ref().unwrap().clone();
                 if Rc::ptr_eq(
                     &x,
                     &x_parent
@@ -194,7 +195,8 @@ pub mod rbtree_implementation {
             if self.is_sentinel_nil(&y.borrow().parent) {
                 self.root = Some(clone_node(&x_rc));
             } else {
-                let y_parent: Rc<RefCell<RedBlackTreeNode>> = y.borrow().parent.as_ref().unwrap().clone();
+                let y_parent: Rc<RefCell<RedBlackTreeNode>> =
+                    y.borrow().parent.as_ref().unwrap().clone();
                 if Rc::ptr_eq(
                     &y,
                     &y_parent
@@ -250,10 +252,14 @@ pub mod rbtree_implementation {
                 .borrow()
                 .parent
                 .as_ref()
-                .map_or(false, |p: &Rc<RefCell<RedBlackTreeNode>>| p.borrow().colour == Colour::Red)
+                .map_or(false, |p: &Rc<RefCell<RedBlackTreeNode>>| {
+                    p.borrow().colour == Colour::Red
+                })
             {
-                let z_parent: Rc<RefCell<RedBlackTreeNode>> = z.borrow().parent.as_ref().unwrap().clone();
-                let z_grandparent: Rc<RefCell<RedBlackTreeNode>> = z_parent.borrow().parent.as_ref().unwrap().clone();
+                let z_parent: Rc<RefCell<RedBlackTreeNode>> =
+                    z.borrow().parent.as_ref().unwrap().clone();
+                let z_grandparent: Rc<RefCell<RedBlackTreeNode>> =
+                    z_parent.borrow().parent.as_ref().unwrap().clone();
                 if Rc::ptr_eq(
                     &z_parent,
                     &z_grandparent
@@ -262,9 +268,12 @@ pub mod rbtree_implementation {
                         .as_ref()
                         .unwrap_or(&self.sentinel_nil),
                 ) {
-                    let y: Option<Rc<RefCell<RedBlackTreeNode>>> = clone_node_optional(&z_grandparent.borrow().right);
+                    let y: Option<Rc<RefCell<RedBlackTreeNode>>> =
+                        clone_node_optional(&z_grandparent.borrow().right);
                     if y.as_ref()
-                        .map_or(false, |uncle: &Rc<RefCell<RedBlackTreeNode>>| uncle.borrow().colour == Colour::Red)
+                        .map_or(false, |uncle: &Rc<RefCell<RedBlackTreeNode>>| {
+                            uncle.borrow().colour == Colour::Red
+                        })
                     {
                         z_parent.borrow_mut().colour = Colour::Black;
                         y.unwrap().borrow_mut().colour = Colour::Black;
@@ -282,7 +291,8 @@ pub mod rbtree_implementation {
                             z = z_parent;
                             self.left_rotate(clone_node(&z));
                         }
-                        let z_parent_case3: Rc<RefCell<RedBlackTreeNode>> = z.borrow().parent.as_ref().unwrap().clone();
+                        let z_parent_case3: Rc<RefCell<RedBlackTreeNode>> =
+                            z.borrow().parent.as_ref().unwrap().clone();
                         let z_grandparent_case3: Rc<RefCell<RedBlackTreeNode>> =
                             z_parent_case3.borrow().parent.as_ref().unwrap().clone();
                         z_parent_case3.borrow_mut().colour = Colour::Black;
@@ -290,9 +300,12 @@ pub mod rbtree_implementation {
                         self.right_rotate(z_grandparent_case3);
                     }
                 } else {
-                    let y: Option<Rc<RefCell<RedBlackTreeNode>>> = clone_node_optional(&z_grandparent.borrow().left);
+                    let y: Option<Rc<RefCell<RedBlackTreeNode>>> =
+                        clone_node_optional(&z_grandparent.borrow().left);
                     if y.as_ref()
-                        .map_or(false, |uncle: &Rc<RefCell<RedBlackTreeNode>>| uncle.borrow().colour == Colour::Red)
+                        .map_or(false, |uncle: &Rc<RefCell<RedBlackTreeNode>>| {
+                            uncle.borrow().colour == Colour::Red
+                        })
                     {
                         z_parent.borrow_mut().colour = Colour::Black;
                         y.unwrap().borrow_mut().colour = Colour::Black;
@@ -310,7 +323,8 @@ pub mod rbtree_implementation {
                             z = z_parent;
                             self.right_rotate(clone_node(&z));
                         }
-                        let z_parent_case3: Rc<RefCell<RedBlackTreeNode>> = z.borrow().parent.as_ref().unwrap().clone();
+                        let z_parent_case3: Rc<RefCell<RedBlackTreeNode>> =
+                            z.borrow().parent.as_ref().unwrap().clone();
                         let z_grandparent_case3: Rc<RefCell<RedBlackTreeNode>> =
                             z_parent_case3.borrow().parent.as_ref().unwrap().clone();
                         z_parent_case3.borrow_mut().colour = Colour::Black;
@@ -333,13 +347,14 @@ pub mod rbtree_implementation {
             }
             let mut current: Rc<RefCell<RedBlackTreeNode>> = x_optional.as_ref().unwrap().clone();
             while !self.is_sentinel_nil(&current.borrow().left) {
-                let next: Rc<RefCell<RedBlackTreeNode>> = current.borrow().left.as_ref().unwrap().clone();
+                let next: Rc<RefCell<RedBlackTreeNode>> =
+                    current.borrow().left.as_ref().unwrap().clone();
                 current = next;
             }
             Some(current)
         }
 
-        /* fn maximum(&self, x_optional: &OptionalVertex) -> OptionalVertex {
+        fn maximum(&self, x_optional: &OptionalVertex) -> OptionalVertex {
             if self.is_sentinel_nil(x_optional) {
                 return None;
             }
@@ -349,13 +364,14 @@ pub mod rbtree_implementation {
                 current = next;
             }
             Some(current)
-        } */
+        }
 
         fn transplant(&mut self, u: Vertex, v: OptionalVertex) {
             if self.is_sentinel_nil(&u.borrow().parent) {
                 self.root = v.clone();
             } else {
-                let u_parent: Rc<RefCell<RedBlackTreeNode>> = u.borrow().parent.as_ref().unwrap().clone();
+                let u_parent: Rc<RefCell<RedBlackTreeNode>> =
+                    u.borrow().parent.as_ref().unwrap().clone();
                 let is_left_child = Rc::ptr_eq(
                     &u,
                     &u_parent
@@ -428,7 +444,9 @@ pub mod rbtree_implementation {
         fn delete_fixup(&mut self, mut x: OptionalVertex, mut x_parent: OptionalVertex) {
             while x != self.root
                 && x.as_ref()
-                    .map_or(true, |n: &Rc<RefCell<RedBlackTreeNode>>| n.borrow().colour == Colour::Black)
+                    .map_or(true, |n: &Rc<RefCell<RedBlackTreeNode>>| {
+                        n.borrow().colour == Colour::Black
+                    })
             {
                 let parent: Option<Rc<RefCell<RedBlackTreeNode>>> = clone_node_optional(&x_parent);
                 let p_rc: Rc<RefCell<RedBlackTreeNode>> = parent.as_ref().unwrap().clone();
@@ -439,32 +457,40 @@ pub mod rbtree_implementation {
                     _ => false,
                 };
                 if x_is_left_child {
-                    let mut w: Option<Rc<RefCell<RedBlackTreeNode>>> = clone_node_optional(&p_rc.borrow().right);
+                    let mut w: Option<Rc<RefCell<RedBlackTreeNode>>> =
+                        clone_node_optional(&p_rc.borrow().right);
                     if w.as_ref()
-                        .map_or(false, |n: &Rc<RefCell<RedBlackTreeNode>>| n.borrow().colour == Colour::Red)
+                        .map_or(false, |n: &Rc<RefCell<RedBlackTreeNode>>| {
+                            n.borrow().colour == Colour::Red
+                        })
                     {
                         w.as_ref().unwrap().borrow_mut().colour = Colour::Black;
                         p_rc.borrow_mut().colour = Colour::Red;
                         self.left_rotate(clone_node(&p_rc));
                         w = clone_node_optional(&p_rc.borrow().right);
                     }
-                    let w_rc: Rc<RefCell<RedBlackTreeNode>> = w.as_ref().unwrap_or(&self.sentinel_nil).clone();
+                    let w_rc: Rc<RefCell<RedBlackTreeNode>> =
+                        w.as_ref().unwrap_or(&self.sentinel_nil).clone();
                     let w_left_is_black = w_rc
                         .borrow()
                         .left
                         .as_ref()
-                        .map_or(true, |c: &Rc<RefCell<RedBlackTreeNode>>| c.borrow().colour == Colour::Black);
+                        .map_or(true, |c: &Rc<RefCell<RedBlackTreeNode>>| {
+                            c.borrow().colour == Colour::Black
+                        });
                     let w_right_is_black = w_rc
                         .borrow()
                         .right
                         .as_ref()
-                        .map_or(true, |c: &Rc<RefCell<RedBlackTreeNode>>| c.borrow().colour == Colour::Black);
+                        .map_or(true, |c: &Rc<RefCell<RedBlackTreeNode>>| {
+                            c.borrow().colour == Colour::Black
+                        });
                     if w_left_is_black && w_right_is_black {
                         w_rc.borrow_mut().colour = Colour::Red;
                         x = clone_node_optional(&parent);
-                        x_parent = clone_node_optional(
-                            &x.as_ref().and_then(|n: &Rc<RefCell<RedBlackTreeNode>>| n.borrow().parent.clone()),
-                        );
+                        x_parent = clone_node_optional(&x.as_ref().and_then(
+                            |n: &Rc<RefCell<RedBlackTreeNode>>| n.borrow().parent.clone(),
+                        ));
                     } else {
                         if w_right_is_black {
                             if let Some(w_left) = &w_rc.borrow().left {
@@ -485,32 +511,40 @@ pub mod rbtree_implementation {
                         x_parent = None;
                     }
                 } else {
-                    let mut w: Option<Rc<RefCell<RedBlackTreeNode>>> = clone_node_optional(&p_rc.borrow().left);
+                    let mut w: Option<Rc<RefCell<RedBlackTreeNode>>> =
+                        clone_node_optional(&p_rc.borrow().left);
                     if w.as_ref()
-                        .map_or(false, |n: &Rc<RefCell<RedBlackTreeNode>>| n.borrow().colour == Colour::Red)
+                        .map_or(false, |n: &Rc<RefCell<RedBlackTreeNode>>| {
+                            n.borrow().colour == Colour::Red
+                        })
                     {
                         w.as_ref().unwrap().borrow_mut().colour = Colour::Black;
                         p_rc.borrow_mut().colour = Colour::Red;
                         self.right_rotate(clone_node(&p_rc));
                         w = clone_node_optional(&p_rc.borrow().left);
                     }
-                    let w_rc: Rc<RefCell<RedBlackTreeNode>> = w.as_ref().unwrap_or(&self.sentinel_nil).clone();
+                    let w_rc: Rc<RefCell<RedBlackTreeNode>> =
+                        w.as_ref().unwrap_or(&self.sentinel_nil).clone();
                     let w_left_is_black = w_rc
                         .borrow()
                         .left
                         .as_ref()
-                        .map_or(true, |c: &Rc<RefCell<RedBlackTreeNode>>| c.borrow().colour == Colour::Black);
+                        .map_or(true, |c: &Rc<RefCell<RedBlackTreeNode>>| {
+                            c.borrow().colour == Colour::Black
+                        });
                     let w_right_is_black = w_rc
                         .borrow()
                         .right
                         .as_ref()
-                        .map_or(true, |c: &Rc<RefCell<RedBlackTreeNode>>| c.borrow().colour == Colour::Black);
+                        .map_or(true, |c: &Rc<RefCell<RedBlackTreeNode>>| {
+                            c.borrow().colour == Colour::Black
+                        });
                     if w_left_is_black && w_right_is_black {
                         w_rc.borrow_mut().colour = Colour::Red;
                         x = clone_node_optional(&parent);
-                        x_parent = clone_node_optional(
-                            &x.as_ref().and_then(|n: &Rc<RefCell<RedBlackTreeNode>>| n.borrow().parent.clone()),
-                        );
+                        x_parent = clone_node_optional(&x.as_ref().and_then(
+                            |n: &Rc<RefCell<RedBlackTreeNode>>| n.borrow().parent.clone(),
+                        ));
                     } else {
                         if w_left_is_black {
                             if let Some(w_right) = &w_rc.borrow().right {
@@ -554,6 +588,66 @@ pub mod rbtree_implementation {
             None
         }
 
+        pub fn successor(&self, x_optional_reference: &OptionalVertex) -> OptionalVertex {
+            if self.is_sentinel_nil(x_optional_reference) {
+                return None;
+            }
+            let x_rc: &Rc<RefCell<RedBlackTreeNode>> = x_optional_reference.as_ref().unwrap();
+            let x_right_child: Option<Rc<RefCell<RedBlackTreeNode>>> =
+                clone_node_optional(&x_rc.borrow().right);
+            if !self.is_sentinel_nil(&x_right_child) {
+                return self.minimum(&x_right_child);
+            }
+            let mut current_x_node_optional: OptionalVertex = x_optional_reference.clone();
+            let mut y_optional: OptionalVertex = clone_node_optional(&x_rc.borrow().parent);
+            while !self.is_sentinel_nil(&y_optional) {
+                let y_rc: Rc<RefCell<RedBlackTreeNode>> = y_optional.as_ref().unwrap().clone();
+                let y_right_child_optional: Option<Rc<RefCell<RedBlackTreeNode>>> =
+                    clone_node_optional(&y_rc.borrow().right);
+                let x_is_y_right_child = match (&current_x_node_optional, &y_right_child_optional) {
+                    (Some(current_rc), Some(y_right_rc)) => Rc::ptr_eq(current_rc, y_right_rc),
+                    _ => false,
+                };
+                if x_is_y_right_child {
+                    current_x_node_optional = y_optional.clone();
+                    y_optional = clone_node_optional(&y_rc.borrow().parent);
+                } else {
+                    break;
+                }
+            }
+            return y_optional;
+        }
+
+        pub fn predecessor(&self, x_optional_reference: &OptionalVertex) -> OptionalVertex {
+            if self.is_sentinel_nil(x_optional_reference) {
+                return None;
+            }
+            let x_rc: &Rc<RefCell<RedBlackTreeNode>> = x_optional_reference.as_ref().unwrap();
+            let x_left_child: Option<Rc<RefCell<RedBlackTreeNode>>> =
+                clone_node_optional(&x_rc.borrow().left);
+            if !self.is_sentinel_nil(&x_left_child) {
+                return self.maximum(&x_left_child);
+            }
+            let mut current_x_node_optional: OptionalVertex = x_optional_reference.clone();
+            let mut y_optional: OptionalVertex = clone_node_optional(&x_rc.borrow().parent);
+            while !self.is_sentinel_nil(&y_optional) {
+                let y_rc: Rc<RefCell<RedBlackTreeNode>> = y_optional.as_ref().unwrap().clone();
+                let y_left_child_optional: Option<Rc<RefCell<RedBlackTreeNode>>> =
+                    clone_node_optional(&y_rc.borrow().left);
+                let x_is_y_left_child = match (&current_x_node_optional, &y_left_child_optional) {
+                    (Some(current_rc), Some(y_left_rc)) => Rc::ptr_eq(current_rc, y_left_rc),
+                    _ => false,
+                };
+                if x_is_y_left_child {
+                    current_x_node_optional = y_optional.clone();
+                    y_optional = clone_node_optional(&y_rc.borrow().parent);
+                } else {
+                    break;
+                }
+            }
+            return y_optional;
+        }
+
         fn print_preorder(&self, node_optional: &OptionalVertex) {
             if self.is_sentinel_nil(node_optional) {
                 return;
@@ -577,7 +671,7 @@ pub mod rbtree_implementation {
             println!(
                 "Key: {}, Colour: {:?}",
                 node_rc.borrow().key,
-                node_rc.borrow().colour
+                node_rc.borrow().colour,
             );
             self.print_inorder(&node_rc.borrow().right);
         }
