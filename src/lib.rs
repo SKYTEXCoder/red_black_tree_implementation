@@ -1,3 +1,7 @@
+// Name: Dandy Arya Akbar
+// NIM: 1313623028
+// Class: 2023 A
+
 pub mod rbtree_implementation {
     use std::rc::Rc;
 
