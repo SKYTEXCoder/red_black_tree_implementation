@@ -1,6 +1,8 @@
 // Name: Dandy Arya Akbar
 // NIM: 1313623028
-// Class: 2023 A
+// Class of: 2023
+// Class Sector: A
+// Subject: Algorithm Analysis and Design
 
 pub mod rbtree_implementation {
     use std::rc::Rc;
