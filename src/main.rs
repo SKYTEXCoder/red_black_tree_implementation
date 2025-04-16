@@ -12,7 +12,6 @@ fn main() {
         tree.print_tree("inorder");
     }
     tree.print_tree("inorder");
-    // Example Deletion
     println!("Searching for node with key 7...");
     if let Some(node_to_delete) = tree.search(7) {
         println!("Deleting node with key 7...");
