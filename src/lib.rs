@@ -2,7 +2,7 @@
 // NIM: 1313623028
 // Class of: 2023
 // Class Sector: A
-// Subject: Algorithm Analysis and Design
+// Subject: Algorithm Analysis and Design 122
 
 pub mod rbtree_implementation {
     use std::rc::Rc;
@@ -582,7 +582,7 @@ pub mod rbtree_implementation {
                 clone_node_optional(&self.root);
             while !self.is_sentinel_nil(&current) {
                 let current_rc: Rc<RefCell<RedBlackTreeNode>> = current.as_ref().unwrap().clone();
-                let current_key = current_rc.borrow().key;
+                let current_key: i32 = current_rc.borrow().key;
                 if key == current_key {
                     return Some(current_rc);
                 } else if key < current_key {
