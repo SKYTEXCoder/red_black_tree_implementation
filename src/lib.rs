@@ -5,7 +5,7 @@
 // Subject: Algorithm Analysis and Design 122
 
 pub mod rbtree_implementation {
-    use std::rc::Rc;
+    use std::rc::{Rc, Weak};
 
     use std::cell::{Ref, RefCell};
 
@@ -41,6 +41,16 @@ pub mod rbtree_implementation {
                 left: None,
                 right: None,
             }))
+        }
+
+        fn new_with_self(key: i32) -> Self {
+            RedBlackTreeNode {
+                colour: Colour::Red,
+                key,
+                parent: None,
+                left: None,
+                right: None,
+            }
         }
 
         fn new_sentinel_nil() -> Vertex {
