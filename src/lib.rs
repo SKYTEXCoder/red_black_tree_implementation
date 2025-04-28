@@ -374,9 +374,9 @@ pub mod rbtree_implementation {
             if self.is_sentinel_nil(x_optional) {
                 return None;
             }
-            let mut current = x_optional.as_ref().unwrap().clone();
+            let mut current: Rc<RefCell<RedBlackTreeNode>> = x_optional.as_ref().unwrap().clone();
             while !self.is_sentinel_nil(&current.borrow().right) {
-                let next = current.borrow().right.as_ref().unwrap().clone();
+                let next: Rc<RefCell<RedBlackTreeNode>> = current.borrow().right.as_ref().unwrap().clone();
                 current = next;
             }
             Some(current)
@@ -466,7 +466,7 @@ pub mod rbtree_implementation {
             {
                 let parent: Option<Rc<RefCell<RedBlackTreeNode>>> = clone_node_optional(&x_parent);
                 let p_rc: Rc<RefCell<RedBlackTreeNode>> = parent.as_ref().unwrap().clone();
-                let x_is_left_child = match (&p_rc.borrow().left, &x) {
+                let x_is_left_child: bool = match (&p_rc.borrow().left, &x) {
                     (Some(left_rc), Some(x_rc)) => Rc::ptr_eq(left_rc, x_rc),
                     (None, None) => true,
                     (Some(_), None) => self.is_sentinel_nil(&p_rc.borrow().left),
@@ -620,7 +620,7 @@ pub mod rbtree_implementation {
                 let y_rc: Rc<RefCell<RedBlackTreeNode>> = y_optional.as_ref().unwrap().clone();
                 let y_right_child_optional: Option<Rc<RefCell<RedBlackTreeNode>>> =
                     clone_node_optional(&y_rc.borrow().right);
-                let x_is_y_right_child = match (&current_x_node_optional, &y_right_child_optional) {
+                let x_is_y_right_child: bool = match (&current_x_node_optional, &y_right_child_optional) {
                     (Some(current_rc), Some(y_right_rc)) => Rc::ptr_eq(current_rc, y_right_rc),
                     _ => false,
                 };
@@ -650,7 +650,7 @@ pub mod rbtree_implementation {
                 let y_rc: Rc<RefCell<RedBlackTreeNode>> = y_optional.as_ref().unwrap().clone();
                 let y_left_child_optional: Option<Rc<RefCell<RedBlackTreeNode>>> =
                     clone_node_optional(&y_rc.borrow().left);
-                let x_is_y_left_child = match (&current_x_node_optional, &y_left_child_optional) {
+                let x_is_y_left_child: bool = match (&current_x_node_optional, &y_left_child_optional) {
                     (Some(current_rc), Some(y_left_rc)) => Rc::ptr_eq(current_rc, y_left_rc),
                     _ => false,
                 };
